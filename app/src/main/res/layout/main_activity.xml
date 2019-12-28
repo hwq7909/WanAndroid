@@ -7,6 +7,7 @@
     <include layout="@layout/head_empty_layout"/>
 
     <FrameLayout
+        android:id="@+id/fl_fragment"
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="1">
@@ -17,83 +18,108 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
+            android:id="@+id/ll_main"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center">
             <ImageView
+                android:id="@+id/iv_main"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/menu_main"/>
             <TextView
+                android:id="@+id/tv_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/main"
-                android:textSize="24px"
+                android:textSize="30px"
                 android:textColor="@color/black"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_project"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center">
             <ImageView
+                android:id="@+id/iv_project"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/menu_project"/>
             <TextView
+                android:id="@+id/tv_project"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/project"
-                android:textSize="24px"
+                android:textSize="30px"
                 android:textColor="@color/black"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_playground"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center">
             <ImageView
+                android:id="@+id/iv_playground"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/menu_tree"/>
             <TextView
+                android:id="@+id/tv_playground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/playground"
-                android:textSize="24px"
+                android:textSize="30px"
                 android:textColor="@color/black"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_public"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center">
             <ImageView
+                android:id="@+id/iv_public"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/menu_public"/>
             <TextView
+                android:id="@+id/tv_public"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/we_chat_public"
-                android:textSize="24px"
+                android:textSize="30px"
                 android:textColor="@color/black"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_mine"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center">
             <ImageView
+                android:id="@+id/iv_mine"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/menu_me"/>
             <TextView
+                android:id="@+id/tv_mine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mine"
-                android:textSize="24px"
+                android:textSize="30px"
                 android:textColor="@color/black"/>
         </LinearLayout>
     </LinearLayout>
