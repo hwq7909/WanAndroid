@@ -6,7 +6,8 @@ import com.example.wanandroid.bean.ResultBean;
 
 import java.lang.ref.WeakReference;
 
-import io.reactivex.ObservableEmitter;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * @author hwq
@@ -15,7 +16,7 @@ import io.reactivex.ObservableEmitter;
  * Email：
  * Description：
  */
-public abstract class MyEmitter<T> implements ObservableEmitter<T> {
+public abstract class MyObserver<T> implements Observer<T> {
 
     public abstract void succeed(T t);
 
@@ -25,13 +26,23 @@ public abstract class MyEmitter<T> implements ObservableEmitter<T> {
 
     private WeakReference<Context> weakReference;
 
-    public MyEmitter(Context context) {
+    public MyObserver(Context context) {
         weakReference = new WeakReference<Context>(context);
     }
 
     private OnResultBeanCallBack onResultBeanCallBack;
 
-    public MyEmitter setOnResultBeanCallBack(OnResultBeanCallBack onResultBeanCallBack) {
+    @Override
+    public void onSubscribe(Disposable d) {
+
+    }
+
+    @Override
+    public void onComplete() {
+
+    }
+
+    public MyObserver setOnResultBeanCallBack(OnResultBeanCallBack onResultBeanCallBack) {
         this.onResultBeanCallBack = onResultBeanCallBack;
         return this;
     }

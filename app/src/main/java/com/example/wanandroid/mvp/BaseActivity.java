@@ -92,7 +92,7 @@ public class BaseActivity extends AppCompatActivity implements IBaseView {
     }
 
     @Override
-    public Activity getActivity() {
+    public Activity getAcitvity() {
         return this;
     }
 

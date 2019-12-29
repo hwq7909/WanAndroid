@@ -41,14 +41,14 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
 
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        this.rootView = inflater.inflate(this.getContentViewId(), null);
-        this.context = this.getActivity();
-        if (this.getContext() != null) {
-            this.loadDialog = new LoadDialog(this.getContext());
+        rootView = inflater.inflate(this.getContentViewId(), null);
+        context = getActivity();
+        if (getContext() != null) {
+            loadDialog = new LoadDialog(getContext());
         }
 
         this.initAllMembersView(savedInstanceState);
-        return this.rootView;
+        return rootView;
     }
 
     /**
@@ -112,28 +112,30 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
 
     }
 
+    @Override
     public Context getContext() {
-        if (this.context == null) {
-            this.context = super.getActivity();
+        if (context == null) {
+            context = super.requireActivity();
         }
 
-        return this.context;
+        return context;
     }
 
+    @Override
     public Activity getAcitvity() {
-        return super.getActivity();
+        return super.requireActivity();
     }
 
     public void setTextStatusBar(int emptyID){
-        ScreenUtil.setHead(getActivity(), rootView.findViewById(emptyID),
+        ScreenUtil.setHead(requireActivity(), rootView.findViewById(emptyID),
                 android.R.color.white,ScreenUtil.StatusBarStyle.COLOR);
-        ScreenUtil.setStatusBarLightMode(getActivity());
+        ScreenUtil.setStatusBarLightMode(requireActivity());
     }
 
     public void setImageStatusBar(int emptyID){
-        ScreenUtil.setHead(getActivity(), rootView.findViewById(emptyID),
+        ScreenUtil.setHead(requireActivity(), rootView.findViewById(emptyID),
                 android.R.color.transparent, ScreenUtil.StatusBarStyle.IMAGE);
-        ScreenUtil.setStatusBarDarkMode(getActivity());
+        ScreenUtil.setStatusBarDarkMode(requireActivity());
     }
 
 }

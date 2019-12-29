@@ -33,5 +33,5 @@ public interface IBaseView {
      */
     Context getContext();
 
-    Activity getActivity();
+    Activity getAcitvity();
 }

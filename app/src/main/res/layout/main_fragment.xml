@@ -25,16 +25,16 @@
             android:src="@drawable/ic_search"/>
     </FrameLayout>
 
+    <com.zhpan.bannerview.BannerViewPager
+        android:id="@+id/banner_view"
+        android:layout_width="match_parent"
+        android:layout_height="450px" />
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <com.zhpan.bannerview.BannerViewPager
-            android:id="@+id/banner_view"
-            android:layout_width="match_parent"
-            android:layout_height="450px" />
 
         <com.yanzhenjie.recyclerview.SwipeRecyclerView
             android:id="@+id/rlv_main"

@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.wanandroid.R;
 import com.example.wanandroid.mvp.BaseActivity;
-import com.example.wanandroid.mvp.IBaseView;
 import com.example.wanandroid.view.fragment.MainFragment;
 import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
@@ -25,7 +24,7 @@ import butterknife.ButterKnife;
  * Email：
  * Description：
  */
-public class MainActivity extends BaseActivity implements IBaseView {
+public class MainActivity extends BaseActivity{
 
     @BindView(R.id.fl_fragment) FrameLayout fl_fragment;
 
@@ -47,6 +46,11 @@ public class MainActivity extends BaseActivity implements IBaseView {
         initData();
 
         initView();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     private void initView() {
