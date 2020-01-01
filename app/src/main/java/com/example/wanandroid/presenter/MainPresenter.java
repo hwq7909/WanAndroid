@@ -2,6 +2,7 @@ package com.example.wanandroid.presenter;
 
 import com.example.wanandroid.Interface.IBaseCallBack;
 import com.example.wanandroid.Interface.MainView;
+import com.example.wanandroid.bean.MainArticleListBean;
 import com.example.wanandroid.bean.MainBannerBean;
 import com.example.wanandroid.bean.MainBannerListBean;
 import com.example.wanandroid.bean.ResultBean;
@@ -27,7 +28,7 @@ public class MainPresenter extends BasePresenter {
     }
 
     /**
-     * 获得首页轮播图列表
+     * 获取首页轮播图列表
      */
     public void getBannerList() {
         iBaseView.showLoading();
@@ -36,6 +37,37 @@ public class MainPresenter extends BasePresenter {
             public void onSuccess(MainBannerListBean data) {
                 iBaseView.hideLoading();
                 iBaseView.getBannerList(data);
+            }
+
+            @Override
+            public void onFailure(ResultBean resultBean) {
+                iBaseView.hideLoading();
+                iBaseView.showToast(resultBean.getMsg());
+            }
+
+            @Override
+            public void onError() {
+                iBaseView.hideLoading();
+                iBaseView.showErr("");
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    /**
+     * 获取首页文章列表
+     */
+    public void getMainArticleList(int p) {
+        iBaseView.showLoading();
+        model.getMainArticleList("" + p, new IBaseCallBack<MainArticleListBean>() {
+            @Override
+            public void onSuccess(MainArticleListBean data) {
+                iBaseView.hideLoading();
+                iBaseView.getMainArticleList(data);
             }
 
             @Override

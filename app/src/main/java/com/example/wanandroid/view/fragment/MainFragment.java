@@ -11,6 +11,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.example.wanandroid.Interface.MainView;
 import com.example.wanandroid.R;
+import com.example.wanandroid.bean.MainArticleListBean;
 import com.example.wanandroid.bean.MainBannerBean;
 import com.example.wanandroid.bean.MainBannerListBean;
 import com.example.wanandroid.mvp.BaseFragment;
@@ -39,6 +40,7 @@ public class MainFragment extends BaseFragment implements MainView {
     @BindView(R.id.rlv_main) SwipeRecyclerView rlv_main;
 
     private MainPresenter presenter;
+    private int p = 0;
 
     @Override
     public int getContentViewId() {
@@ -55,7 +57,6 @@ public class MainFragment extends BaseFragment implements MainView {
     @Override
     public void onStart() {
         super.onStart();
-        presenter = new MainPresenter(this);
         initData();
     }
 
@@ -65,7 +66,9 @@ public class MainFragment extends BaseFragment implements MainView {
     }
 
     private void initData() {
+        presenter = new MainPresenter(this);
         presenter.getBannerList();
+        presenter.getMainArticleList(p);
     }
 
     private void initView() {
@@ -87,6 +90,11 @@ public class MainFragment extends BaseFragment implements MainView {
                         showToast("click" + position + "item");
                     }
                 }).create(bannerListBean.getData());
+    }
+
+    @Override
+    public void getMainArticleList(MainArticleListBean articleListBean) {
+
     }
 
     public class MainBannerViewHolder implements ViewHolder<MainBannerBean> {

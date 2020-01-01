@@ -3,6 +3,7 @@ package com.example.wanandroid.model;
 import android.content.Context;
 
 import com.example.wanandroid.Interface.IBaseCallBack;
+import com.example.wanandroid.bean.MainArticleListBean;
 import com.example.wanandroid.bean.MainBannerBean;
 import com.example.wanandroid.bean.MainBannerListBean;
 import com.example.wanandroid.bean.ResultBean;
@@ -27,7 +28,7 @@ public class MainModel extends RXModel {
     }
 
     /**
-     * 获得首页轮播图列表
+     * 获取首页轮播图列表
      * @param iBaseCallBack
      */
     public void getBannerList(final IBaseCallBack<MainBannerListBean> iBaseCallBack) {
@@ -39,6 +40,34 @@ public class MainModel extends RXModel {
                     @Override
                     public void succeed(MainBannerListBean bannerListBean) {
                         iBaseCallBack.onSuccess(bannerListBean);
+                    }
+
+                    @Override
+                    public void failed(ResultBean resultBean) {
+                        iBaseCallBack.onFailure(resultBean);
+                    }
+
+                    @Override
+                    public void error(Throwable e) {
+                        iBaseCallBack.onError();
+                    }
+                });
+    }
+
+    /**
+     * 获取首页文章列表
+     * @param p             页码
+     * @param iBaseCallBack
+     */
+    public void getMainArticleList(String p, final IBaseCallBack<MainArticleListBean> iBaseCallBack) {
+        getServices(UnifiedService.class, PROJECT_TYPE.WANANDROID)
+                .getMainArticleList(p)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new MyObserver<MainArticleListBean>(context){
+                    @Override
+                    public void succeed(MainArticleListBean mainArticleListBean) {
+                        iBaseCallBack.onSuccess(mainArticleListBean);
                     }
 
                     @Override
