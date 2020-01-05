@@ -2,8 +2,7 @@ package com.example.wanandroid.presenter;
 
 import com.example.wanandroid.Interface.IBaseCallBack;
 import com.example.wanandroid.Interface.MainView;
-import com.example.wanandroid.bean.MainArticleListBean;
-import com.example.wanandroid.bean.MainBannerBean;
+import com.example.wanandroid.bean.MainArticleInfoBean;
 import com.example.wanandroid.bean.MainBannerListBean;
 import com.example.wanandroid.bean.ResultBean;
 import com.example.wanandroid.model.MainModel;
@@ -63,9 +62,9 @@ public class MainPresenter extends BasePresenter {
      */
     public void getMainArticleList(int p) {
         iBaseView.showLoading();
-        model.getMainArticleList("" + p, new IBaseCallBack<MainArticleListBean>() {
+        model.getMainArticleList("" + p, new IBaseCallBack<MainArticleInfoBean>() {
             @Override
-            public void onSuccess(MainArticleListBean data) {
+            public void onSuccess(MainArticleInfoBean data) {
                 iBaseView.hideLoading();
                 iBaseView.getMainArticleList(data);
             }

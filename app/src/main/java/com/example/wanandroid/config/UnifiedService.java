@@ -1,5 +1,6 @@
 package com.example.wanandroid.config;
 
+import com.example.wanandroid.bean.MainArticleInfoBean;
 import com.example.wanandroid.bean.MainArticleListBean;
 import com.example.wanandroid.bean.MainBannerBean;
 import com.example.wanandroid.bean.MainBannerListBean;
@@ -19,6 +20,6 @@ public interface UnifiedService {
     Observable<MainBannerListBean> getBannerList(@Field("a") String a);
 
     @GET("/article/list/{p}/json")
-    Observable<MainArticleListBean> getMainArticleList(@Path("p") String p);
+    Observable<MainArticleInfoBean> getMainArticleList(@Path("p") String p);
 
 }

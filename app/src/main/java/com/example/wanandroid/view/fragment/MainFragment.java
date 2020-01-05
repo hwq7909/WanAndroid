@@ -2,26 +2,33 @@ package com.example.wanandroid.view.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.wanandroid.Interface.MainView;
 import com.example.wanandroid.R;
-import com.example.wanandroid.bean.MainArticleListBean;
+import com.example.wanandroid.adapter.ArticleAdapter;
+import com.example.wanandroid.bean.MainArticleBean;
+import com.example.wanandroid.bean.MainArticleInfoBean;
 import com.example.wanandroid.bean.MainBannerBean;
 import com.example.wanandroid.bean.MainBannerListBean;
 import com.example.wanandroid.mvp.BaseFragment;
 import com.example.wanandroid.presenter.MainPresenter;
-import com.example.wanandroid.utils.log;
+import com.google.android.material.appbar.AppBarLayout;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;
+import com.yanzhenjie.recyclerview.widget.DefaultItemDecoration;
 import com.zhpan.bannerview.BannerViewPager;
-import com.zhpan.bannerview.constants.IndicatorGravity;
 import com.zhpan.bannerview.holder.ViewHolder;
 import com.zhpan.bannerview.utils.BannerUtils;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,10 +44,13 @@ public class MainFragment extends BaseFragment implements MainView {
 
     @BindView(R.id.banner_view) BannerViewPager bannerViewPager;
     @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.appBarLayout) AppBarLayout appBarLayout;
     @BindView(R.id.rlv_main) SwipeRecyclerView rlv_main;
 
     private MainPresenter presenter;
+    private ArticleAdapter adapter;
     private int p = 0;
+    private ArrayList<MainArticleBean> articleList = new ArrayList<>();
 
     @Override
     public int getContentViewId() {
@@ -51,27 +61,62 @@ public class MainFragment extends BaseFragment implements MainView {
     public void initAllMembersView(Bundle var1) {
         ButterKnife.bind(this, rootView);
 
-        initView();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         initData();
+
+        initView();
+
+        initList();
+
+        initListener();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    private void initListener() {
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (verticalOffset >= 0) {
+                    swipeRefreshLayout.setEnabled(true);
+                } else {
+                    swipeRefreshLayout.setEnabled(false);
+                }
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                        p = 1;
+                        presenter.getMainArticleList(p);
+                    }
+                }, 500);
+            }
+        });
+
+        rlv_main.setLoadMoreListener(()->
+                new Handler().postDelayed(()->
+                        presenter.getMainArticleList(p), 500));
+    }
+
+    private void initList() {
+        adapter = new ArticleAdapter(getContext(), articleList);
+        rlv_main.loadMoreFinish(false, true);
+        rlv_main.setLayoutManager(new LinearLayoutManager(getContext()));
+        rlv_main.addItemDecoration(new DefaultItemDecoration(ContextCompat.getColor(context,R.color.transparent),
+                0, 20));
+        rlv_main.setAdapter(adapter);
+    }
+
+    private void initView() {
     }
 
     private void initData() {
         presenter = new MainPresenter(this);
         presenter.getBannerList();
         presenter.getMainArticleList(p);
-    }
-
-    private void initView() {
     }
 
     @Override
@@ -93,8 +138,18 @@ public class MainFragment extends BaseFragment implements MainView {
     }
 
     @Override
-    public void getMainArticleList(MainArticleListBean articleListBean) {
-
+    public void getMainArticleList(MainArticleInfoBean mainArticleInfoBean) {
+        if (p == 0) {
+            articleList.clear();
+        }
+        if (mainArticleInfoBean.getData().isOver()) {
+            rlv_main.loadMoreFinish(true,false);
+        } else {
+            rlv_main.loadMoreFinish(false,true);
+            p++;
+        }
+        articleList.addAll(mainArticleInfoBean.getData().getDatas());
+        adapter.notifyDataSetChanged();
     }
 
     public class MainBannerViewHolder implements ViewHolder<MainBannerBean> {

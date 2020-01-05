@@ -3,6 +3,7 @@ package com.example.wanandroid.model;
 import android.content.Context;
 
 import com.example.wanandroid.Interface.IBaseCallBack;
+import com.example.wanandroid.bean.MainArticleInfoBean;
 import com.example.wanandroid.bean.MainArticleListBean;
 import com.example.wanandroid.bean.MainBannerBean;
 import com.example.wanandroid.bean.MainBannerListBean;
@@ -59,15 +60,15 @@ public class MainModel extends RXModel {
      * @param p             页码
      * @param iBaseCallBack
      */
-    public void getMainArticleList(String p, final IBaseCallBack<MainArticleListBean> iBaseCallBack) {
+    public void getMainArticleList(String p, final IBaseCallBack<MainArticleInfoBean> iBaseCallBack) {
         getServices(UnifiedService.class, PROJECT_TYPE.WANANDROID)
                 .getMainArticleList(p)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new MyObserver<MainArticleListBean>(context){
+                .subscribe(new MyObserver<MainArticleInfoBean>(context){
                     @Override
-                    public void succeed(MainArticleListBean mainArticleListBean) {
-                        iBaseCallBack.onSuccess(mainArticleListBean);
+                    public void succeed(MainArticleInfoBean mainArticleInfoBean) {
+                        iBaseCallBack.onSuccess(mainArticleInfoBean);
                     }
 
                     @Override

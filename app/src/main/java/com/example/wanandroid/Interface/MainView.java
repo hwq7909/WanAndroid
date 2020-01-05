@@ -1,5 +1,6 @@
 package com.example.wanandroid.Interface;
 
+import com.example.wanandroid.bean.MainArticleInfoBean;
 import com.example.wanandroid.bean.MainArticleListBean;
 import com.example.wanandroid.bean.MainBannerBean;
 import com.example.wanandroid.bean.MainBannerListBean;
@@ -22,8 +23,8 @@ public interface MainView extends IBaseView {
 
     /**
      * 获得首页文章列表
-     * @param articleListBean
+     * @param mainArticleInfoBean
      */
-    void getMainArticleList(MainArticleListBean articleListBean);
+    void getMainArticleList(MainArticleInfoBean mainArticleInfoBean);
 
 }
