@@ -34,6 +34,7 @@ public class ArticleAdapter extends RecyclerView.Adapter {
     private Context context;
     private ArrayList<MainArticleBean> list;
     private LayoutInflater inflater;
+    private OnItemClickListener listener;
 
     public ArticleAdapter(Context context, ArrayList<MainArticleBean> list) {
         this.context = context;
@@ -56,13 +57,13 @@ public class ArticleAdapter extends RecyclerView.Adapter {
         final ViewHolder h = (ViewHolder) holder;
         MainArticleBean data = list.get(position);
         if (payloads.size() == 0) {
-            commonBind(h, data);
+            commonBind(h, data, position);
         } else {
 
         }
     }
 
-    private void commonBind(ViewHolder h, MainArticleBean data) {
+    private void commonBind(ViewHolder h, MainArticleBean data, final int position) {
         h.tv_author.setText(data.getAuthor().equals("") ? data.getShareUser() : data.getAuthor());
         if (data.getNiceDate().equals("刚刚")) {
             h.tv_new.setVisibility(View.VISIBLE);
@@ -78,11 +79,30 @@ public class ArticleAdapter extends RecyclerView.Adapter {
         h.tv_title.setText(data.getTitle());
         h.tv_sharer.setText(data.getSuperChapterName() + "·" + data.getChapterName());
         h.iv_thumb.setColorFilter(Color.argb(255, 200,200,200));
+        h.ll_item.setOnClickListener(v -> {
+           if (listener != null) {
+               listener.toWebDetail(position);
+           }
+        });
     }
 
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener{
+
+        /**
+         * web详情页
+         * @param position
+         */
+        void toWebDetail(int position);
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

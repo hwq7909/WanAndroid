@@ -21,6 +21,7 @@ import com.example.wanandroid.bean.MainBannerBean;
 import com.example.wanandroid.bean.MainBannerListBean;
 import com.example.wanandroid.mvp.BaseFragment;
 import com.example.wanandroid.presenter.MainPresenter;
+import com.example.wanandroid.view.activity.WebActivity;
 import com.google.android.material.appbar.AppBarLayout;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 import com.yanzhenjie.recyclerview.widget.DefaultItemDecoration;
@@ -99,6 +100,9 @@ public class MainFragment extends BaseFragment implements MainView {
         rlv_main.setLoadMoreListener(()->
                 new Handler().postDelayed(()->
                         presenter.getMainArticleList(p), 500));
+
+        adapter.setOnItemClickListener(position ->
+                startActivity(WebActivity.createIntent(context,articleList.get(position).getLink())));
     }
 
     private void initList() {
@@ -132,7 +136,7 @@ public class MainFragment extends BaseFragment implements MainView {
                 .setOnPageClickListener(new BannerViewPager.OnPageClickListener() {
                     @Override
                     public void onPageClick(int position) {
-                        showToast("click" + position + "item");
+                        startActivity(WebActivity.createIntent(context,bannerListBean.getData().get(position).getUrl()));
                     }
                 }).create(bannerListBean.getData());
     }
