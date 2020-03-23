@@ -1,6 +1,6 @@
 package com.example.wanandroid.bean;
 
-public class ProjectSystemChildrenBean {
+public class TreeChildrenBean {
 
     private String name;
 

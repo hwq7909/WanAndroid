@@ -10,6 +10,9 @@
     <color name="black_grey">#666666</color>
     <color name="gray_deep">#999999</color>
     <color name="grey">#e1e1e1</color>
-    <color name="gray">#efefef</color>
+    <color name="gray">#CCCCCC</color>
     <color name="gold">#ca9b59</color>
+    <color name="green">#07C62D</color>
+    <color name="red">#FF0000</color>
+    <color name="orange">#E6421A</color>
 </resources>

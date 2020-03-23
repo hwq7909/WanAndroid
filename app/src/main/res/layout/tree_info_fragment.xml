@@ -4,5 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/head_empty_layout"/>
+    <com.example.wanandroid.flowlayout.FlowLayoutt
+        android:id="@+id/flowlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+    </com.example.wanandroid.flowlayout.FlowLayoutt>
 </LinearLayout>

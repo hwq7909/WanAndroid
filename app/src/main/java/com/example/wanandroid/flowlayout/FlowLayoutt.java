@@ -1,3 +1,5 @@
+package com.example.wanandroid.flowlayout;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -7,7 +9,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlowLayout extends ViewGroup {
+public class FlowLayoutt extends ViewGroup {
     /**
      * 存储每一行的剩余的空间
      */
@@ -34,11 +36,11 @@ public class FlowLayout extends ViewGroup {
      */
     private boolean isAverageInColumn = true;
 
-    public FlowLayout(Context context) {
+    public FlowLayoutt(Context context) {
         super(context);
     }
 
-    public FlowLayout(Context context, AttributeSet attrs) {
+    public FlowLayoutt(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -83,10 +85,10 @@ public class FlowLayout extends ViewGroup {
             //对子view进行测量
             measureChild(child, widthMeasureSpec, heightMeasureSpec);
             //获取子view的间距
-            MarginLayoutParams params = (MarginLayoutParams) child.getLayoutParams();
+//            MarginLayoutParams params = (MarginLayoutParams)  child.getLayoutParams();
             //获取view占据的空间大小
-            int childViewWidth = child.getMeasuredWidth() + params.leftMargin + params.rightMargin;
-            int childViewHeight = child.getMeasuredHeight() + params.topMargin + params.bottomMargin;
+            int childViewWidth = child.getMeasuredWidth() ;
+            int childViewHeight = child.getMeasuredHeight() ;
 
             if (childViewWidth + lineRealWidth <= viewWidth) {//一行
                 //已占用的空间

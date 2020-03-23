@@ -2,8 +2,8 @@ package com.example.wanandroid.bean;
 
 import java.util.ArrayList;
 
-public class ProjectSystemBean {
-    private ArrayList<ProjectSystemChildrenBean> children;
+public class TreeBean {
+    private ArrayList<TreeChildrenBean> children;
 
     private String courseId;
 
@@ -19,7 +19,7 @@ public class ProjectSystemBean {
 
     private String visible;
 
-    public void setChildren(ArrayList<ProjectSystemChildrenBean> children) {
+    public void setChildren(ArrayList<TreeChildrenBean> children) {
         this.children = children;
     }
 
@@ -51,7 +51,7 @@ public class ProjectSystemBean {
         this.visible = visible;
     }
 
-    public ArrayList<ProjectSystemChildrenBean> getChildren() {
+    public ArrayList<TreeChildrenBean> getChildren() {
         return children;
     }
 

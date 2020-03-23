@@ -7,15 +7,14 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.wanandroid.view.fragment.ProjectCommunityFragment;
 import com.example.wanandroid.view.fragment.ProjectSystemFragment;
-import com.example.wanandroid.view.fragment.ProjectNewsFragment;
+import com.example.wanandroid.view.fragment.TreeInfoFragment;
 
 
-
-public class ProjectFragmentAdapter extends FragmentPagerAdapter {
+public class TreeFragmentAdapter extends FragmentPagerAdapter {
 
     private final String[] mTitles;
 
-    public ProjectFragmentAdapter(@NonNull FragmentManager fm, String[] titles) {
+    public TreeFragmentAdapter(@NonNull FragmentManager fm, String[] titles) {
         super(fm);
         this.mTitles = titles;
     }
@@ -26,7 +25,7 @@ public class ProjectFragmentAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(position == 0){
-            return new ProjectNewsFragment();
+            return new TreeInfoFragment();
         }else if (position == 1){
             return new ProjectSystemFragment();
         }

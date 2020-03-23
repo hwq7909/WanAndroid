@@ -13,14 +13,14 @@ import com.google.android.material.tabs.TabLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ProjectFragment extends BaseFragment {
+public class TreeFragment extends BaseFragment {
 
     @BindView(R.id.tab_layout) TabLayout tabLayout;
     @BindView(R.id.view_pager) ViewPager viewPager;
 
     @Override
     public int getContentViewId() {
-        return R.layout.project_fragment;
+        return R.layout.tree_fragment;
     }
 
     @Override

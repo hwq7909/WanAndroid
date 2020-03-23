@@ -15,10 +15,15 @@ import com.bumptech.glide.Glide;
 import com.example.wanandroid.Interface.MainView;
 import com.example.wanandroid.R;
 import com.example.wanandroid.adapter.ArticleAdapter;
+import com.example.wanandroid.bean.ExitBean;
+import com.example.wanandroid.bean.LoginBean;
 import com.example.wanandroid.bean.MainArticleBean;
 import com.example.wanandroid.bean.MainArticleInfoBean;
 import com.example.wanandroid.bean.MainBannerBean;
 import com.example.wanandroid.bean.MainBannerListBean;
+import com.example.wanandroid.bean.ProjectCommunityInfoBean;
+import com.example.wanandroid.bean.TreeInfoBean;
+import com.example.wanandroid.bean.RegisterBean;
 import com.example.wanandroid.mvp.BaseFragment;
 import com.example.wanandroid.presenter.MainPresenter;
 import com.example.wanandroid.view.activity.WebActivity;
@@ -154,6 +159,31 @@ public class MainFragment extends BaseFragment implements MainView {
         }
         articleList.addAll(mainArticleInfoBean.getData().getDatas());
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getTree(TreeInfoBean projectSystemTreeBean) {
+
+    }
+
+    @Override
+    public void getProjectCommunityList(ProjectCommunityInfoBean projectCommunityInfoBean) {
+
+    }
+
+    @Override
+    public void Login(LoginBean loginBean) {
+
+    }
+
+    @Override
+    public void Register(RegisterBean registerBean) {
+
+    }
+
+    @Override
+    public void Exit(ExitBean exitBean) {
+
     }
 
     public class MainBannerViewHolder implements ViewHolder<MainBannerBean> {
