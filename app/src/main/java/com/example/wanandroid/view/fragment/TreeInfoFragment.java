@@ -14,12 +14,13 @@ import com.example.wanandroid.bean.ProjectCommunityInfoBean;
 import com.example.wanandroid.bean.RegisterBean;
 import com.example.wanandroid.bean.TreeBean;
 import com.example.wanandroid.bean.TreeInfoBean;
-import com.example.wanandroid.flowlayout.FlowLayoutt;
 import com.example.wanandroid.mvp.BaseFragment;
 import com.example.wanandroid.presenter.MainPresenter;
-import com.google.android.material.internal.FlowLayout;
+import com.example.wanandroid.view.widget.FlowLayout;
+
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,11 +28,10 @@ import butterknife.ButterKnife;
 public class TreeInfoFragment extends BaseFragment implements MainView {
 
     @BindView(R.id.flowlayout)
-    FlowLayoutt flowLayout;
+    FlowLayout flowLayout;
 
     private MainPresenter presenter;
     private ArrayList<TreeBean> treeBeans = new ArrayList<>();
-
 
     @Override
     public int getContentViewId() {
@@ -64,11 +64,12 @@ public class TreeInfoFragment extends BaseFragment implements MainView {
 
     @Override
     public void getTree(TreeInfoBean treeInfoBean) {
+        ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         for (int i = 0; i < treeInfoBean.getData().get(1).getChildren().size(); i++){
             TextView view = new TextView(context);
             view.setText(treeInfoBean.getData().get(1).getChildren().get(i).getName());
-            flowLayout.addView(view);
-
+            flowLayout.addView(view, mlp);
         }
         flowLayout.requestLayout();
     }

@@ -93,6 +93,7 @@ public class MineFragment extends BaseFragment implements MainView {
                 img_login.setImageResource(R.drawable.ic_user);
                 tv_register.setText("退出");
                 isLogin = true;
+                ((MainActivity)getAcitvity()).setLoginData(loginBean);
             }
         }
     }
@@ -135,10 +136,22 @@ public class MineFragment extends BaseFragment implements MainView {
             tv_register.setText("注册");
             nickname.setText("点击头像登录");
             isLogin = false;
+            ((MainActivity)getAcitvity()).clearLoginData();
         }
     }
 
-    public LoginBean getLoginBean(){
-        return loginBean;
+    public void setLoginData(LoginBean loginBean){
+        nickname.setText(loginBean.getData().getNickname());
+        img_login.setImageResource(R.drawable.ic_user);
+        tv_register.setText("退出");
+        isLogin = true;
     }
+
+//    public void clearLoginData(LoginBean loginBean){
+//        img_login.setImageResource(R.drawable.ic_nologinuser);
+//        tv_register.setText("注册");
+//        nickname.setText("点击头像登录");
+//        isLogin = false;
+//    }
+
 }

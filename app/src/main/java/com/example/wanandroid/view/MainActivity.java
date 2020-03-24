@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.wanandroid.R;
 import com.example.wanandroid.bean.LoginBean;
+import com.example.wanandroid.bean.RegisterBean;
 import com.example.wanandroid.mvp.BaseActivity;
 import com.example.wanandroid.view.activity.LoginActivity;
 import com.example.wanandroid.view.fragment.MainFragment;
@@ -60,6 +62,9 @@ public class MainActivity extends BaseActivity{
     private PublicFragment publicFragment;
     private MineFragment mineFragment;
 
+    private boolean isLogin = false;
+    private LoginBean loginBean;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,13 +86,16 @@ public class MainActivity extends BaseActivity{
     private void initNV() {
         View headerView = navView.inflateHeaderView(R.layout.nav_header);
         ImageView head_iv = headerView.findViewById(R.id.nv_image);
-        head_iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivityForResult(intent, 1);
-            }
-        });
+        if (isLogin == false){
+            head_iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivityForResult(intent, 1);
+                }
+            });
+        }
+
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -215,13 +223,39 @@ public class MainActivity extends BaseActivity{
         currentPosition = 0;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK){
+            if (requestCode == 1){
+                loginBean = data.getParcelableExtra("loginbean");
+                View headerView = navView.inflateHeaderView(R.layout.nav_header);
+                ImageView head_iv = headerView.findViewById(R.id.nv_image);
+                TextView nv_text = headerView.findViewById(R.id.nv_text);
+                nv_text.setText(loginBean.getData().getNickname());
+                head_iv.setImageResource(R.drawable.ic_user);
+                isLogin = true;
+                mineFragment.setLoginData(loginBean);
+            }
+        }
+    }
+
     public void setLoginData(LoginBean loginBean) {
-        //tv.settext();
-        //
+        View headerView = navView.inflateHeaderView(R.layout.nav_header);
+        ImageView head_iv = headerView.findViewById(R.id.nv_image);
+        TextView nv_text = headerView.findViewById(R.id.nv_text);
+        head_iv.setImageResource(R.drawable.ic_user);
+        nv_text.setText(loginBean.getData().getNickname());
+        isLogin = true;
     }
 
     public void clearLoginData() {
-
+        View headerView = navView.inflateHeaderView(R.layout.nav_header);
+        ImageView head_iv = headerView.findViewById(R.id.nv_image);
+        TextView nv_text = headerView.findViewById(R.id.nv_text);
+        head_iv.setImageResource(R.drawable.ic_nologinuser);
+        nv_text.setText("点击登录/注册");
+        isLogin = false;
     }
 
 }
