@@ -17,6 +17,7 @@ import com.example.wanandroid.bean.MainBannerListBean;
 import com.example.wanandroid.bean.ProjectCommunityInfoBean;
 import com.example.wanandroid.bean.TreeInfoBean;
 import com.example.wanandroid.bean.RegisterBean;
+import com.example.wanandroid.config.SpConfig;
 import com.example.wanandroid.mvp.BaseFragment;
 import com.example.wanandroid.presenter.MainPresenter;
 import com.example.wanandroid.view.MainActivity;
@@ -47,6 +48,18 @@ public class MineFragment extends BaseFragment implements MainView {
     @Override
     public void initAllMembersView(Bundle var1) {
         ButterKnife.bind(this, rootView);
+        loginBean = SpConfig.getInstance(context).getLoginBean();
+        if (loginBean != null){
+            nickname.setText(loginBean.getData().getNickname());
+            img_login.setImageResource(R.drawable.ic_user);
+            tv_register.setText("退出");
+            isLogin = true;
+        }else {
+            img_login.setImageResource(R.drawable.ic_nologinuser);
+            tv_register.setText("注册");
+            nickname.setText("点击头像登录");
+            isLogin = false;
+        }
         presenter = new MainPresenter(this);
         initClick();
 
@@ -88,12 +101,14 @@ public class MineFragment extends BaseFragment implements MainView {
                 isLogin = true;
                 ((MainActivity)getAcitvity()).setLoginData(loginBean);
             }else if (requestCode == 2){
-                RegisterBean registerBean = data.getParcelableExtra("registerbean");
-                nickname.setText(registerBean.getData().getNickname());
+                String user = data.getStringExtra("username");
+                String pass = data.getStringExtra("password");
+                presenter.Login(user, pass);
+                nickname.setText(user);
                 img_login.setImageResource(R.drawable.ic_user);
                 tv_register.setText("退出");
                 isLogin = true;
-                ((MainActivity)getAcitvity()).setLoginData(loginBean);
+                ((MainActivity)getAcitvity()).setRegisterData(user);
             }
         }
     }
@@ -146,12 +161,4 @@ public class MineFragment extends BaseFragment implements MainView {
         tv_register.setText("退出");
         isLogin = true;
     }
-
-//    public void clearLoginData(LoginBean loginBean){
-//        img_login.setImageResource(R.drawable.ic_nologinuser);
-//        tv_register.setText("注册");
-//        nickname.setText("点击头像登录");
-//        isLogin = false;
-//    }
-
 }

@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.wanandroid.view.widget.FlowLayout
-        android:id="@+id/flowlayout"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rlv_tree"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </com.example.wanandroid.view.widget.FlowLayout>
+    </androidx.recyclerview.widget.RecyclerView>
 </RelativeLayout>

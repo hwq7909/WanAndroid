@@ -1,11 +1,14 @@
 package com.example.wanandroid.view.fragment;
 
 import android.os.Bundle;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wanandroid.Interface.MainView;
 import com.example.wanandroid.R;
+import com.example.wanandroid.adapter.TreeInfoAdapter;
 import com.example.wanandroid.bean.ExitBean;
 import com.example.wanandroid.bean.LoginBean;
 import com.example.wanandroid.bean.MainArticleInfoBean;
@@ -27,11 +30,12 @@ import butterknife.ButterKnife;
 
 public class TreeInfoFragment extends BaseFragment implements MainView {
 
-    @BindView(R.id.flowlayout)
-    FlowLayout flowLayout;
+    @BindView(R.id.rlv_tree)
+    RecyclerView rlv_tree;
 
+    private TreeInfoAdapter treeInfoAdapter;
     private MainPresenter presenter;
-    private ArrayList<TreeBean> treeBeans = new ArrayList<>();
+    private ArrayList<TreeBean> treeBeans;
 
     @Override
     public int getContentViewId() {
@@ -47,8 +51,19 @@ public class TreeInfoFragment extends BaseFragment implements MainView {
     }
 
     private void initData() {
+        rlv_tree.setLayoutManager(new LinearLayoutManager(context));
+        treeBeans = new ArrayList<>();
+        treeInfoAdapter = new TreeInfoAdapter(context, treeBeans);
+        rlv_tree.setAdapter(treeInfoAdapter);
         presenter = new MainPresenter(this);
         presenter.getTree();
+
+        treeInfoAdapter.setOnItemClickListener(new TreeInfoAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(TreeBean bean) {
+                Toast.makeText(context, "暂未实现", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -64,14 +79,10 @@ public class TreeInfoFragment extends BaseFragment implements MainView {
 
     @Override
     public void getTree(TreeInfoBean treeInfoBean) {
-        ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        for (int i = 0; i < treeInfoBean.getData().get(1).getChildren().size(); i++){
-            TextView view = new TextView(context);
-            view.setText(treeInfoBean.getData().get(1).getChildren().get(i).getName());
-            flowLayout.addView(view, mlp);
-        }
-        flowLayout.requestLayout();
+        List<TreeBean> data = treeInfoBean.getData();
+        treeBeans.clear();
+        treeBeans.addAll(data);
+        treeInfoAdapter.notifyDataSetChanged();
     }
 
     @Override

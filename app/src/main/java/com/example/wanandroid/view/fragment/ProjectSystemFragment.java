@@ -3,6 +3,7 @@ package com.example.wanandroid.view.fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +16,7 @@ import com.example.wanandroid.R;
 
 import com.example.wanandroid.dialog.ConfirmCancelDialog;
 import com.example.wanandroid.mvp.BaseFragment;
+import com.example.wanandroid.view.activity.LbsActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,20 +32,14 @@ public class ProjectSystemFragment extends BaseFragment{
     Button bt_start;
     @BindView(R.id.bt_reset)
     Button bt_reset;
-    @BindView(R.id.bt_delete)
-    Button bt_delete;
     @BindView(R.id.bt_cancel)
     Button bt_cancel;
+    @BindView(R.id.btn_lbs) Button btn_lbs;
 
 
     private String str;
     private Timer timer;
     private static int count = 10;
-    private Timer deletetimer;
-    private AlertDialog.Builder mDialog;
-    private AlertDialog realDialog;
-    private static int mcount;
-    private String string;
     private String cancelstring;
     private Timer canceltimer;
     private static int COUNT;
@@ -63,9 +59,15 @@ public class ProjectSystemFragment extends BaseFragment{
 
         initReset();
 
-        initDelete();
-
         initCancel();
+
+        btn_lbs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, LbsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initCancel() {
@@ -190,83 +192,4 @@ public class ProjectSystemFragment extends BaseFragment{
             }
         });
     }
-
-    private void initDelete() {
-        bt_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                string = "确定（" + mcount + "秒）";
-                mDialog= new AlertDialog.Builder(context);
-                mDialog.setTitle("删除");
-                mDialog.setMessage("是否删除？");
-                mDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                        deletetimer.cancel();
-                    }
-                });
-                mDialog.setPositiveButton(string, onClickListener);
-                realDialog =  mDialog.create();
-                realDialog.show();
-                initCountDownDelete();
-            }
-        });
-    }
-
-    private DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            deletetimer.cancel();
-        }
-    };
-
-    private void initCountDownDelete(){
-        mcount = 10;
-        if (mcount == 10){
-            deletetimer = new Timer();
-            deletetimer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    Message message = new Message();
-                    message.arg1 = mcount;
-                    if (mcount != 0){
-                        mcount --;
-                    }else {
-                        return;
-                    }
-                    deletehandler.sendMessage(message);
-                }
-            }, 1000, 1000);
-        }
-    }
-
-    private Handler deletehandler = new Handler() {
-                public void handleMessage(Message msg){
-                    int mcount = msg.arg1;
-                    Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
-//                    mDialog.setPositiveButton(string, onClickListener);
-                    realDialog.dismiss();
-                    realDialog = null;
-                    string = "确定（" + mcount + "秒）";
-                    mDialog= new AlertDialog.Builder(context);
-                    mDialog.setTitle("删除");
-                    mDialog.setMessage("是否删除？");
-                    mDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                            deletetimer.cancel();
-                        }
-                    });
-                    mDialog.setPositiveButton(string, onClickListener);
-                    realDialog =  mDialog.create();
-                    realDialog.show();
-                    if (mcount == 0){
-                        deletetimer.cancel();
-                    }
-        }
-    };
-
-
 }

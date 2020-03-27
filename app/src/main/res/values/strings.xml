@@ -8,7 +8,7 @@
     <string name="tv_news">文本</string>
     <string-array name="project_top_tab">
         <item>体系</item>
-        <item>倒计时</item>
-        <item>导航</item>
+        <item>倒计时对话框</item>
+        <item>广场文章列表</item>
     </string-array>
 </resources>

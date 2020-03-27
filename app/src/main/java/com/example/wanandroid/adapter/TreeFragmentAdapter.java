@@ -19,8 +19,6 @@ public class TreeFragmentAdapter extends FragmentPagerAdapter {
         this.mTitles = titles;
     }
 
-
-
     @NonNull
     @Override
     public Fragment getItem(int position) {

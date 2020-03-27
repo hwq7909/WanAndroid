@@ -36,18 +36,18 @@
         android:text="重置"/>
 
     <Button
-        android:id="@+id/bt_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="10s倒计时删除"
-        android:textSize="30sp"/>
-
-    <Button
         android:id="@+id/bt_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="30sp"
         android:text="倒计时自动取消"/>
+
+    <Button
+        android:id="@+id/btn_lbs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="百度地图"
+        android:textSize="30sp"/>
 </LinearLayout>

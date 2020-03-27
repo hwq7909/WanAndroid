@@ -12,20 +12,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wanandroid.R;
 import com.example.wanandroid.bean.TreeBean;
-import com.yanzhenjie.recyclerview.OnItemClickListener;
+import com.example.wanandroid.bean.TreeChildrenBean;
+import com.example.wanandroid.view.widget.FlowLayout;
 import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TreeInfoAdapter extends RecyclerView.Adapter {
+public class TreeInfoAdapter extends RecyclerView.Adapter<TreeInfoAdapter.ViewHolder> {
 
     private Context context;
     private LayoutInflater inflater;
-    private OnItemClickListener listener;
     private ArrayList<TreeBean> list;
+    private OnItemClickListener listener;
 
     public TreeInfoAdapter(Context context, ArrayList<TreeBean> list){
         this.context = context;
@@ -35,13 +37,35 @@ public class TreeInfoAdapter extends RecyclerView.Adapter {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(inflater.inflate(R.layout.tree_item, parent,false));
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ViewHolder viewHolder = new ViewHolder(inflater.inflate(R.layout.tree_item, parent,false));
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
+        holder.fl.removeAllViews();
+        final TreeBean bean = list.get(i);
+        //获取标题
+        String name = bean.getName();
+        //获取相关信息标题
+        List<TreeChildrenBean> mList = bean.getChildren();
+        //添加
+        holder.title.setText(name);
+        for (int j = 0; j < mList.size(); j++){
+            TextView textView = (TextView) inflater.from(context).inflate(R.layout.item_label, null);
+            String s = mList.get(j).getName();
+            textView.setText(s);
+            holder.fl.addView(textView);
+        }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null){
+                    listener.onItemClick(bean);
+                }
+            }
+        });
     }
 
     @Override
@@ -49,18 +73,18 @@ public class TreeInfoAdapter extends RecyclerView.Adapter {
         return list.size();
     }
 
-    private void OnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener){
         this.listener = listener;
     }
 
-    private interface OnItemClickListener{
-
+    public interface OnItemClickListener{
+        void onItemClick(TreeBean bean);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        @BindView(R.id.big_child) TextView big_child;
-        @BindView(R.id.fl_child) TextView fl_child;
+        @BindView(R.id.mTv_Title) TextView title;
+        @BindView(R.id.mFl) FlowLayout fl;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

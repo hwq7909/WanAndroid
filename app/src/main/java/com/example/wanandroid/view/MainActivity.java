@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.wanandroid.R;
 import com.example.wanandroid.bean.LoginBean;
 import com.example.wanandroid.bean.RegisterBean;
+import com.example.wanandroid.config.SpConfig;
 import com.example.wanandroid.mvp.BaseActivity;
 import com.example.wanandroid.view.activity.LoginActivity;
 import com.example.wanandroid.view.fragment.MainFragment;
@@ -62,7 +63,11 @@ public class MainActivity extends BaseActivity{
     private PublicFragment publicFragment;
     private MineFragment mineFragment;
 
-    private boolean isLogin = false;
+    private View headerView;
+    private TextView nv_text;
+    private ImageView head_iv;
+
+//    private boolean isLogin;
     private LoginBean loginBean;
 
     @Override
@@ -74,19 +79,17 @@ public class MainActivity extends BaseActivity{
         ButterKnife.bind(this);
         context = this;
 
-        initNV();
-
         initData();
 
         initView();
+
+        initNV();
 
         initClick();
     }
 
     private void initNV() {
-        View headerView = navView.inflateHeaderView(R.layout.nav_header);
-        ImageView head_iv = headerView.findViewById(R.id.nv_image);
-        if (isLogin == false){
+//        if (isLogin == false){
             head_iv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -94,7 +97,7 @@ public class MainActivity extends BaseActivity{
                     startActivityForResult(intent, 1);
                 }
             });
-        }
+//        }
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -150,6 +153,19 @@ public class MainActivity extends BaseActivity{
     }
 
     private void initView() {
+        headerView = navView.inflateHeaderView(R.layout.nav_header);
+        head_iv = headerView.findViewById(R.id.nv_image);
+        nv_text = headerView.findViewById(R.id.nv_text);
+        loginBean = SpConfig.getInstance(context).getLoginBean();
+        if (loginBean != null){
+//            isLogin = true;
+            nv_text.setText(loginBean.getData().getNickname());
+            head_iv.setImageResource(R.drawable.ic_user);
+        }else {
+//            isLogin = false;
+            head_iv.setImageResource(R.drawable.ic_nologinuser);
+            nv_text.setText("点击头像登录");
+        }
         changeTab();
     }
     //Tab标签更换
@@ -228,34 +244,34 @@ public class MainActivity extends BaseActivity{
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK){
             if (requestCode == 1){
+//                isLogin = true;
                 loginBean = data.getParcelableExtra("loginbean");
-                View headerView = navView.inflateHeaderView(R.layout.nav_header);
-                ImageView head_iv = headerView.findViewById(R.id.nv_image);
-                TextView nv_text = headerView.findViewById(R.id.nv_text);
                 nv_text.setText(loginBean.getData().getNickname());
                 head_iv.setImageResource(R.drawable.ic_user);
-                isLogin = true;
-                mineFragment.setLoginData(loginBean);
+                SpConfig.getInstance(context).saveLoginBean(loginBean);
+                if (mineFragment != null){
+                    mineFragment.setLoginData(loginBean);
+                }
             }
         }
     }
 
     public void setLoginData(LoginBean loginBean) {
-        View headerView = navView.inflateHeaderView(R.layout.nav_header);
-        ImageView head_iv = headerView.findViewById(R.id.nv_image);
-        TextView nv_text = headerView.findViewById(R.id.nv_text);
+//        isLogin = true;
         head_iv.setImageResource(R.drawable.ic_user);
         nv_text.setText(loginBean.getData().getNickname());
-        isLogin = true;
+    }
+
+    public void setRegisterData(String username){
+//        isLogin = true;
+        head_iv.setImageResource(R.drawable.ic_user);
+        nv_text.setText(username);
     }
 
     public void clearLoginData() {
-        View headerView = navView.inflateHeaderView(R.layout.nav_header);
-        ImageView head_iv = headerView.findViewById(R.id.nv_image);
-        TextView nv_text = headerView.findViewById(R.id.nv_text);
+//        isLogin = false;
         head_iv.setImageResource(R.drawable.ic_nologinuser);
         nv_text.setText("点击登录/注册");
-        isLogin = false;
     }
 
 }
